@@ -7,9 +7,11 @@ package repositories;
 
 import config.DBContext;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import models.Semesters;
@@ -19,6 +21,7 @@ import models.Semesters;
  * @author Dell
  */
 public class SemestersRepository {
+
     public List<Semesters> select() throws SQLException {
 
         List<Semesters> list = null;
@@ -40,4 +43,55 @@ public class SemestersRepository {
         con.close();
         return list;
     }
+
+    public Semesters read(int semesterID) throws SQLException {
+        Semesters semesters = null;
+        Connection con = DBContext.getConnection();
+        PreparedStatement stm = con.prepareStatement("select * from Semesters where semesterID = ? ");
+        stm.setInt(1, semesterID);
+        ResultSet rs = stm.executeQuery();
+        if (rs.next()) {
+            semesters = new Semesters();
+            semesters.setSemesterID(rs.getString("semesterID"));
+            semesters.setSemesterName(rs.getString("semesterName"));
+            semesters.setStartDay(rs.getTimestamp("startDay"));
+            semesters.setEndDay(rs.getTimestamp("endDay"));
+           
+        }
+        con.close();
+        return semesters;
+    }
+
+    public void create(Semesters semesters) throws SQLException {
+        Connection con = DBContext.getConnection();
+        PreparedStatement stm = con.prepareStatement("insert into Semesters values(?, ?, ?, ?)");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        stm.setString(1, semesters.getSemesterID());
+        stm.setString(2, semesters.getSemesterName());
+        stm.setString(3, sdf.format(semesters.getStartDay()));
+        stm.setString(4, sdf.format(semesters.getEndDay()));
+        int count = stm.executeUpdate();
+        con.close();
+    }
+
+    public void update(Semesters semesters) throws SQLException {
+        Connection con = DBContext.getConnection();
+        PreparedStatement stm = con.prepareStatement("update Semesters set semesterName = ?, startDay = ?, endDay = ? where semesterID = ?");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        stm.setString(1, semesters.getSemesterName());
+        stm.setString(2, sdf.format(semesters.getStartDay()));
+        stm.setString(3, sdf.format(semesters.getEndDay()));
+        stm.setString(4, sdf.format(semesters.getSemesterID()));
+        int count = stm.executeUpdate();
+        con.close();
+    }
+
+    public void delete(int semesterID) throws SQLException {
+        Connection con = DBContext.getConnection();
+        PreparedStatement stm = con.prepareStatement("delete from Semesters where semesterID = ? ");
+        stm.setInt(1, semesterID);
+        int count = stm.executeUpdate();
+        con.close();
+    }
+
 }

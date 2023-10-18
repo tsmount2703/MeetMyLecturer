@@ -24,7 +24,9 @@
             <!--header-->
             <div class="row header ">
                 <div class="col nounderline ">
-                    
+                    <a href="<c:url value="/requests/list.do"/>">Requests</a> |
+                    <a href="<c:url value="/users/list.do"/>">Users</a> |
+                    <a href="<c:url value="/users/logout.do"/>">Logout</a>
                 </div>
             </div>
             <!--view-->

@@ -6,6 +6,11 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
-<jsp:forward page="/requests/list.do" />
-<!--<a href="<c:url value="/requests/list.do" />">Requests</a>-->
+<c:choose>
+    <c:when test="${users==null}">
+        <jsp:forward page="/users/login.do" />
+    </c:when>
+    <c:otherwise>
+        <jsp:forward page="/home/index.do" />
+    </c:otherwise>
+</c:choose>

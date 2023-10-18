@@ -36,6 +36,8 @@ public class Subjects {
     public void setSubjectName(String subjectName) {
         this.subjectName = subjectName;
     }
+
+   
     
     
 }
