@@ -27,6 +27,15 @@ public class Bookings {
         this.status = status;
     }
 
+    public Bookings(String bookingID, String studentID, String freeSlotID, boolean status) {
+        this.bookingID = bookingID;
+        this.studentID = studentID;
+        this.freeSlotID = freeSlotID;
+        this.status = status;
+    }
+    
+    
+
     public int getID() {
         return ID;
     }

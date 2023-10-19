@@ -44,11 +44,11 @@ public class SemestersRepository {
         return list;
     }
 
-    public Semesters read(int semesterID) throws SQLException {
+    public Semesters read(String semesterID) throws SQLException {
         Semesters semesters = null;
         Connection con = DBContext.getConnection();
         PreparedStatement stm = con.prepareStatement("select * from Semesters where semesterID = ? ");
-        stm.setInt(1, semesterID);
+        stm.setString(1, semesterID);
         ResultSet rs = stm.executeQuery();
         if (rs.next()) {
             semesters = new Semesters();
@@ -86,10 +86,10 @@ public class SemestersRepository {
         con.close();
     }
 
-    public void delete(int semesterID) throws SQLException {
+    public void delete(String semesterID) throws SQLException {
         Connection con = DBContext.getConnection();
         PreparedStatement stm = con.prepareStatement("delete from Semesters where semesterID = ? ");
-        stm.setInt(1, semesterID);
+        stm.setString(1, semesterID);
         int count = stm.executeUpdate();
         con.close();
     }

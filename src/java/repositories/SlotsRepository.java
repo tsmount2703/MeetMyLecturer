@@ -46,11 +46,11 @@ public class SlotsRepository {
 
     }
 
-    public Slots read(int slotID) throws SQLException {
+    public Slots read(String slotID) throws SQLException {
         Slots slots = null;
         Connection con = DBContext.getConnection();
         PreparedStatement stm = con.prepareStatement("select * from Slots where slotID = ? ");
-        stm.setInt(1, slotID);
+        stm.setString(1, slotID);
         ResultSet rs = stm.executeQuery();
         if (rs.next()) {
             slots = new Slots();

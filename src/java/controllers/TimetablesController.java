@@ -7,11 +7,15 @@ package controllers;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import models.Timetables;
+import repositories.TimetablesRepository;
 
 /**
  *
@@ -32,17 +36,161 @@ public class TimetablesController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet TimetablesController</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet TimetablesController at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+        String controller = (String) request.getAttribute("controller");
+        String action = (String) request.getAttribute("action");
+        switch (action) {
+            case "list": {
+                list(request, response);
+                break;
+            }
+
+            case "update": {
+                update(request, response);
+                break;
+            }
+
+            case "update_handler": {
+                update_handler(request, response);
+                break;
+            }
+
+            case "create": {
+                create(request, response);
+                break;
+            }
+
+            case "create_handler": {
+                create_handler(request, response);
+                break;
+            }
+             case "delete": {
+                delete(request, response);
+                break;
+            }
+            
+            default: {
+                break;
+            }
+
+        }
+    }
+
+    protected void list(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        try {
+            TimetablesRepository ttr = new TimetablesRepository();
+            List<Timetables> list = ttr.select();
+            request.setAttribute("list", list);
+            request.getRequestDispatcher("/WEB-INF/layouts/main.jsp").forward(request, response);
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            request.setAttribute("message", ex.getMessage());
+            request.getRequestDispatcher("/WEB-INF/layouts/main.jsp").forward(request, response);
+        }
+    }
+
+    protected void create(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        request.getRequestDispatcher("/WEB-INF/layouts/main.jsp").forward(request, response);
+    }
+
+    protected void create_handler(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        TimetablesRepository ttr = new TimetablesRepository();
+        String op = request.getParameter("op");
+        switch (op) {
+            case "create": {
+                try {
+                    String subjectCode = request.getParameter("subjectCode");
+                    String slotID = request.getParameter("slotID");
+                    String lecturerID = request.getParameter("lecturerID");
+                    String semesterID = request.getParameter("semesterID");
+                    Timetables timetables = new Timetables(subjectCode, slotID, lecturerID, semesterID);
+                    request.setAttribute("timetables", timetables);
+                    ttr.create(timetables);
+                    response.sendRedirect(request.getContextPath() + "/timetables/list.do");
+                } catch (Exception ex) {
+                    //Hiện lại create form để nhập lại dữ liệu
+                    ex.printStackTrace();//In thông báo chi tiết cho developer
+                    request.setAttribute("message", ex.getMessage());
+                    request.setAttribute("action", "create");
+                    request.getRequestDispatcher("WEB-INF/layouts/main.jsp").forward(request, response);
+                }
+                break;
+            }
+
+            case "cancel": {
+                response.sendRedirect(request.getContextPath() + "/timetables/list.do");
+                break;
+            }
+        }
+    }
+
+    protected void update(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        TimetablesRepository ttr = new TimetablesRepository();
+        try {
+            String subjectCode = request.getParameter("subjectCode");
+            String slotID = request.getParameter("slotID");
+            String lecturerID = request.getParameter("lecturerID");
+            String semesterID = request.getParameter("semesterID");
+            Timetables timetables = ttr.read(subjectCode, slotID, lecturerID, semesterID);
+            request.setAttribute("timetables", timetables);
+            request.getRequestDispatcher("WEB-INF/layouts/main.jsp").forward(request, response);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            request.setAttribute("message", ex.getMessage());
+            request.setAttribute("controller", "error");
+            request.setAttribute("action", "error");
+            request.getRequestDispatcher("WEB-INF/layouts/main.jsp").forward(request, response);
+        }
+    }
+
+    protected void update_handler(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        TimetablesRepository ttr = new TimetablesRepository();
+        String op = request.getParameter("op");
+        switch (op) {
+            case "update":
+                try {
+                    String subjectCode = request.getParameter("subjectCode");
+                    String slotID = request.getParameter("slotID");
+                    String lecturerID = request.getParameter("lecturerID");
+                    String semesterID = request.getParameter("semesterID");
+                    Timetables timetables = ttr.read(subjectCode, slotID, lecturerID, semesterID);
+                    request.setAttribute("timetables", timetables);
+                    ttr.update(timetables);
+                    response.sendRedirect(request.getContextPath() + "/timetables/list.do");
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                    request.setAttribute("message", ex.getMessage());
+                    request.setAttribute("controller", "error");
+                    request.setAttribute("action", "error");
+                    request.getRequestDispatcher("WEB-INF/layouts/main.jsp").forward(request, response);
+                }
+                break;
+            case "cancel":
+                response.sendRedirect(request.getContextPath() + "/timetables/list.do");
+        }
+    }
+    
+    protected void delete(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        TimetablesRepository ttr = new TimetablesRepository();
+        try {
+            String subjectCode = request.getParameter("subjectCode");
+            String slotID = request.getParameter("slotID");
+            String lecturerID = request.getParameter("lecturerID");
+            String semesterID = request.getParameter("semesterID");
+            ttr.delete(subjectCode, slotID, lecturerID, semesterID);
+            response.sendRedirect(request.getContextPath() + "/timetables/list.do");
+//            request.getRequestDispatcher("WEB-INF/layouts/main.jsp").forward(request, response);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            request.setAttribute("message", ex.getMessage());
+            request.setAttribute("controller", "error");
+            request.setAttribute("action", "error");
+            request.getRequestDispatcher("WEB-INF/layouts/main.jsp").forward(request, response);
         }
     }
 

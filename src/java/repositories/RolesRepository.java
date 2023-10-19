@@ -43,11 +43,11 @@ public class RolesRepository {
 
     }
 
-    public Roles read(int roleID) throws SQLException {
+    public Roles read(String roleID) throws SQLException {
         Roles roles = null;
         Connection con = DBContext.getConnection();
         PreparedStatement stm = con.prepareStatement("select * from Roles where roleID = ? ");
-        stm.setInt(1, roleID);
+        stm.setString(1, roleID);
         ResultSet rs = stm.executeQuery();
         if (rs.next()) {
             roles = new Roles();
@@ -76,10 +76,10 @@ public class RolesRepository {
         con.close();
     }
 
-    public void delete(int roleID) throws SQLException {
+    public void delete(String roleID) throws SQLException {
         Connection con = DBContext.getConnection();
         PreparedStatement stm = con.prepareStatement("delete from Roles where roleID = ? ");
-        stm.setInt(1, roleID);
+        stm.setString(1, roleID);
         int count = stm.executeUpdate();
         con.close();
     }

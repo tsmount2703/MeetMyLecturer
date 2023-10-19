@@ -80,6 +80,11 @@ public class UsersController extends HttpServlet {
                 break;
             }
 
+            case "delete": {
+                delete(request, response);
+                break;
+            }
+
             default: {
                 break;
             }
@@ -201,7 +206,7 @@ public class UsersController extends HttpServlet {
             request.setAttribute("message", ex.getMessage());
             request.setAttribute("controller", "error");
             request.setAttribute("action", "error");
-            request.getRequestDispatcher("/layouts/main.jsp").forward(request, response);
+            request.getRequestDispatcher("WEB-INF/layouts/main.jsp").forward(request, response);
         }
     }
 
@@ -235,6 +240,23 @@ public class UsersController extends HttpServlet {
                 break;
             case "cancel":
                 response.sendRedirect(request.getContextPath() + "/users/list.do");
+        }
+    }
+
+    protected void delete(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        UsersRepository ur = new UsersRepository();
+        try {
+            String userID = request.getParameter("userID");
+            ur.delete(userID);
+            response.sendRedirect(request.getContextPath() + "/users/list.do");
+//            request.getRequestDispatcher("WEB-INF/layouts/main.jsp").forward(request, response);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            request.setAttribute("message", ex.getMessage());
+            request.setAttribute("controller", "error");
+            request.setAttribute("action", "error");
+            request.getRequestDispatcher("WEB-INF/layouts/main.jsp").forward(request, response);
         }
     }
 

@@ -39,6 +39,31 @@ public class FreeSlots {
         this.lecturerID = lecturerID;
     }
 
+    public FreeSlots(String subjectCode, Date startTime, Date endTime, String password, int capacity, String meetLink, int count, String lecturerID) {
+        this.subjectCode = subjectCode;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.password = password;
+        this.capacity = capacity;
+        this.meetLink = meetLink;
+        this.count = count;
+        this.lecturerID = lecturerID;
+    }
+
+    public FreeSlots(int ID, String subjectCode, Date startTime, Date endTime, String password, int capacity, String meetLink, int count, String lecturerID) {
+        this.ID = ID;
+        this.subjectCode = subjectCode;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.password = password;
+        this.capacity = capacity;
+        this.meetLink = meetLink;
+        this.count = count;
+        this.lecturerID = lecturerID;
+    }
+    
+    
+
     public int getID() {
         return ID;
     }

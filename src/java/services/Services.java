@@ -5,11 +5,23 @@
  */
 package services;
 
+import java.text.SimpleDateFormat;
+
 /**
  *
  * @author Dell
  */
 public class Services {
+    
+    private static final String fDate = "yyyy-MM-dd";
+    private static final String fTime = "HH:mm:ss";
+    private static final String fDateTime = "yyyy-MM-dd HH:mm:ss";
+
+    //Convert Date into String
+    public static final SimpleDateFormat sdfDate = new SimpleDateFormat(fDate);
+    public static final SimpleDateFormat sdfTime = new SimpleDateFormat(fTime);
+    public static final SimpleDateFormat sdfDateTime = new SimpleDateFormat(fDateTime);
+    
     public static String getStatusOfUsers(boolean userStatus){
         String statusText = null;
         if(userStatus == true){

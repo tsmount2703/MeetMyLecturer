@@ -118,6 +118,15 @@ public class UsersRepository {
         con.close();
     }
 
+    public void delete(String userID) throws SQLException {
+        Connection con = DBContext.getConnection();
+        PreparedStatement stm = con.prepareStatement("delete from Users where userID = ? ");
+        stm.setString(1, userID);
+        int count = stm.executeUpdate();
+        con.close();
+
+    }
+
     public boolean isActive(boolean userStatus) {
         return userStatus == true;
     }

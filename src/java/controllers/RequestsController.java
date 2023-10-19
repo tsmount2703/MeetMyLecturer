@@ -19,9 +19,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import models.Requests;
+import models.Roles;
 import models.Semesters;
+import models.Users;
 import repositories.RequestsRepository;
+import repositories.RolesRepository;
 import repositories.SemestersRepository;
+import repositories.UsersRepository;
+import services.Services;
 
 /**
  *
@@ -66,6 +71,31 @@ public class RequestsController extends HttpServlet {
                     request.getRequestDispatcher("/WEB-INF/layouts/main.jsp").forward(request, response);
                 }
                 break;
+
+            case "update": {
+                update(request, response);
+                break;
+            }
+
+            case "update_handler": {
+                update_handler(request, response);
+                break;
+            }
+
+            case "create": {
+                create(request, response);
+                break;
+            }
+
+            case "create_handler": {
+                create_handler(request, response);
+                break;
+            }
+
+            case "delete": {
+                delete(request, response);
+                break;
+            }
 
             default:
                 break;
@@ -228,6 +258,122 @@ public class RequestsController extends HttpServlet {
         }
         request.setAttribute("select", select);
 
+    }
+
+    protected void create(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        request.getRequestDispatcher("/WEB-INF/layouts/main.jsp").forward(request, response);
+    }
+
+    protected void create_handler(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        RequestsRepository rr = new RequestsRepository();
+        String op = request.getParameter("op");
+        switch (op) {
+            case "create": {
+                try {
+                    Boolean status = Boolean.parseBoolean(request.getParameter("status"));
+                    String subjectCode = request.getParameter("subjectCode");
+                    String day = request.getParameter("day");
+                    String start = request.getParameter("start");
+                    String startTime1 = day + " " + start;
+                    Date startTime = Services.sdfDateTime.parse(request.getParameter(startTime1));
+                    String end = request.getParameter("end");
+                    String endTime1 = day + " " + end;
+                    Date endTime = Services.sdfDateTime.parse(request.getParameter(endTime1));
+                    String description = request.getParameter("description");
+                    String studentID = request.getParameter("studentID");
+                    String lecturerID = request.getParameter("lecturerID");
+                    Requests requests = new Requests(status, subjectCode, startTime, endTime, description, studentID, lecturerID);
+                    request.setAttribute("requests", requests);
+                    rr.create(requests);
+                    response.sendRedirect(request.getContextPath() + "/requests/list.do");
+                } catch (Exception ex) {
+                    //Hiện lại create form để nhập lại dữ liệu
+                    ex.printStackTrace();//In thông báo chi tiết cho developer
+                    request.setAttribute("message", ex.getMessage());
+                    request.setAttribute("action", "create");
+                    request.getRequestDispatcher("WEB-INF/layouts/main.jsp").forward(request, response);
+                }
+                break;
+            }
+
+            case "cancel": {
+                response.sendRedirect(request.getContextPath() + "/requests/list.do");
+                break;
+            }
+        }
+    }
+
+    protected void update(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        RequestsRepository rr = new RequestsRepository();
+        try {
+            int ID = Integer.parseInt(request.getParameter("ID"));
+            Requests requests = rr.read(ID);
+            request.setAttribute("requests", requests);
+            request.getRequestDispatcher("WEB-INF/layouts/main.jsp").forward(request, response);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            request.setAttribute("message", ex.getMessage());
+            request.setAttribute("controller", "error");
+            request.setAttribute("action", "error");
+            request.getRequestDispatcher("WEB-INF/layouts/main.jsp").forward(request, response);
+        }
+    }
+
+    protected void update_handler(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        RequestsRepository rr = new RequestsRepository();
+        String op = request.getParameter("op");
+        switch (op) {
+            case "update":
+                try {
+                    int ID = Integer.parseInt(request.getParameter("ID"));
+                    Boolean status = Boolean.parseBoolean(request.getParameter("status"));
+                    String subjectCode = request.getParameter("subjectCode");
+                    String day = request.getParameter("day");
+                    String start = request.getParameter("start");
+                    String startTime1 = day + " " + start;
+                    Date startTime = Services.sdfDateTime.parse(request.getParameter(startTime1));
+                    String end = request.getParameter("end");
+                    String endTime1 = day + " " + end;
+                    Date endTime = Services.sdfDateTime.parse(request.getParameter(endTime1));
+                    String description = request.getParameter("description");
+                    String studentID = request.getParameter("studentID");
+                    String lecturerID = request.getParameter("lecturerID");
+                    Requests requests = new Requests(ID, status, subjectCode, startTime, endTime, description, studentID, lecturerID);
+                    request.setAttribute("requests", requests);
+                    rr.update(requests);
+                    response.sendRedirect(request.getContextPath() + "/requests/list.do");
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                    request.setAttribute("message", ex.getMessage());
+                    request.setAttribute("controller", "error");
+                    request.setAttribute("action", "error");
+                    request.getRequestDispatcher("WEB-INF/layouts/main.jsp").forward(request, response);
+                }
+                break;
+            case "cancel":
+                response.sendRedirect(request.getContextPath() + "/requests/list.do");
+        }
+    }
+
+    protected void delete(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        RequestsRepository rr = new RequestsRepository();
+        try {
+            int ID = Integer.parseInt(request.getParameter("ID"));
+            rr.delete(ID);
+            response.sendRedirect(request.getContextPath() + "/requests/list.do");
+//            request.getRequestDispatcher("WEB-INF/layouts/main.jsp").forward(request, response);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            request.setAttribute("message", ex.getMessage());
+            request.setAttribute("controller", "error");
+            request.setAttribute("action", "error");
+            request.getRequestDispatcher("WEB-INF/layouts/main.jsp").forward(request, response);
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

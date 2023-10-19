@@ -37,6 +37,29 @@ public class Requests {
         this.lecturerID = lecturerID;
     }
 
+    public Requests(boolean status, String subjectCode, Date startTime, Date endTime, String description, String studentID, String lecturerID) {
+        this.status = status;
+        this.subjectCode = subjectCode;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.description = description;
+        this.studentID = studentID;
+        this.lecturerID = lecturerID;
+    }
+
+    public Requests(int ID, boolean status, String subjectCode, Date startTime, Date endTime, String description, String studentID, String lecturerID) {
+        this.ID = ID;
+        this.status = status;
+        this.subjectCode = subjectCode;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.description = description;
+        this.studentID = studentID;
+        this.lecturerID = lecturerID;
+    }
+    
+    
+
     public int getID() {
         return ID;
     }
