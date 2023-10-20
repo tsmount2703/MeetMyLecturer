@@ -30,8 +30,8 @@
             <td>${users.statusText}</td>
             <td>${users.roleName}</td>
             <td>
-                <a href="<c:url value="/users/update.do?userID=${users.userID}" />"><i class="bi bi-pencil-square"></i> Update</a> 
-                <!--<a href="<c:url value="/toy/delete.do?id=${toy.id}" />"><i class="bi bi-trash3"></i>Delete</a>-->
+                <a href="<c:url value="/users/update.do?userID=${users.userID}" />"><i class="bi bi-pencil-square"></i> Update</a> |
+                <a href="<c:url value="/users/delete.do?userID=${users.userID}" />"><i class="bi bi-trash3"></i>Delete</a>
             </td>
         </tr>
         

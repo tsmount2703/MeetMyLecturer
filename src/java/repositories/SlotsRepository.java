@@ -37,8 +37,8 @@ public class SlotsRepository {
             slots.setSlotID(rs.getString("slotID"));
             slots.setDay1(rs.getString("day1"));
             slots.setDay2(rs.getString("day2"));
-            slots.setStartTime(rs.getTimestamp("starttime"));
-            slots.setEndTime(rs.getTimestamp("endtime"));
+            slots.setStartTime(rs.getTime("starttime"));
+            slots.setEndTime(rs.getTime("endtime"));
             list.add(slots);
         }
         con.close();
@@ -57,8 +57,8 @@ public class SlotsRepository {
             slots.setSlotID(rs.getString("slotID"));
             slots.setDay1(rs.getString("day1"));
             slots.setDay2(rs.getString("day2"));
-            slots.setStartTime(rs.getTimestamp("starttime"));
-            slots.setEndTime(rs.getTimestamp("endtime"));
+            slots.setStartTime(rs.getTime("starttime"));
+            slots.setEndTime(rs.getTime("endtime"));
         }
         con.close();
         return slots;

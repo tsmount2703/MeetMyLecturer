@@ -7,6 +7,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <h2>Requests</h2>
 <hr/>
+<a href="<c:url value="/requests/create.do" />"></i>Create</a>
 <form action="<c:url value="/requests/search.do"/>">    
     <div>
         <p style="display: inline-block">Search By: </p>
@@ -31,7 +32,8 @@
     </div>
     <table class="table table-striped" border="1">
         <tr>
-            <!--<th>ID</th>-->
+            <th>ID</th>
+            <th>Request ID</th>
             <th>Subject Code</th>
             <th>Start Time</th>
             <th>End Time</th>
@@ -43,7 +45,8 @@
         </tr>
         <c:forEach var="requests" items="${list}" varStatus="loop">
             <tr>
-                <!--<td>${requests.requestID}</td>-->
+                <td>${requests.ID}</td>
+                <td>${requests.requestID}</td>
                 <td>${requests.subjectCode}</td>
                 <td>${requests.startTime}</td>
                 <td>${requests.endTime}</td>
@@ -52,9 +55,8 @@
                 <td>${requests.studentID}</td>
                 <td>${requests.lecturerID}</td>
                 <td>
-                    <a href="<c:url value="" />"><i class="bi bi-pencil-square"></i>Edit</a> 
-                    <br/>
-                    <a href="<c:url value="" />"><i class="bi bi-trash3"></i>Delete</a>
+                    <a href="<c:url value="/requests/update.do?ID=${requests.ID}" />"><i class="bi bi-pencil-square"></i> Update</a> 
+                    <a href="<c:url value="/requests/delete.do?ID=${requests.ID}" />"><i class="bi bi-trash3"></i>Delete</a>
                 </td>
             </tr>
 

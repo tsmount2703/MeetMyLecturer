@@ -14,8 +14,8 @@ import java.text.SimpleDateFormat;
 public class Services {
     
     private static final String fDate = "yyyy-MM-dd";
-    private static final String fTime = "HH:mm:ss";
-    private static final String fDateTime = "yyyy-MM-dd HH:mm:ss";
+    private static final String fTime = "HH:mm";
+    private static final String fDateTime = "yyyy-MM-dd HH:mm";
 
     //Convert Date into String
     public static final SimpleDateFormat sdfDate = new SimpleDateFormat(fDate);

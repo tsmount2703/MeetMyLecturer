@@ -71,8 +71,8 @@ public class FreeSlotsRepository {
 
     public void create(FreeSlots freeSlots) throws SQLException {
         Connection con = DBContext.getConnection();
-        PreparedStatement stm = con.prepareStatement("insert into FreeSlots values(?, ?, ?, ?, ?, ?, ?, ?, ?)");
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        PreparedStatement stm = con.prepareStatement("insert into FreeSlots values(?, ?, ?, ?, ?, ?, ?, ?)");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 //        stm.setString(1, freeSlots.getFreeSlotID());
         stm.setString(1, freeSlots.getSubjectCode());
         stm.setString(2, sdf.format(freeSlots.getStartTime()));
@@ -89,7 +89,7 @@ public class FreeSlotsRepository {
     public void update(FreeSlots freeSlots) throws SQLException {
         Connection con = DBContext.getConnection();
         PreparedStatement stm = con.prepareStatement("update FreeSlots set subjectCode = ?, startTime = ?, endTime = ?, password = ?, capacity = ?, meetLink = ?, count = ?, lecturer = ?  where ID = ?");
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
         stm.setString(1, freeSlots.getSubjectCode());
         stm.setString(2, sdf.format(freeSlots.getStartTime()));
         stm.setString(3, sdf.format(freeSlots.getEndTime()));
@@ -105,7 +105,7 @@ public class FreeSlotsRepository {
 
     public void delete(int ID) throws SQLException {
         Connection con = DBContext.getConnection();
-        PreparedStatement stm = con.prepareStatement("delete from Bookings where ID = ? ");
+        PreparedStatement stm = con.prepareStatement("delete from FreeSlots where ID = ? ");
         stm.setInt(1, ID);
         int count = stm.executeUpdate();
         con.close();
