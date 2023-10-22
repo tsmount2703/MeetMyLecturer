@@ -178,7 +178,7 @@ public class FreeSlotsController extends HttpServlet {
 //                    Date end = Services.sdfTime.parse(request.getParameter("end"));
                     String end = request.getParameter("end");
                     String endTime1 = day + " " + end;
-                    Date endTime = Services.sdfDateTime.parse(request.getParameter(endTime1));
+                    Date endTime = Services.sdfDateTime.parse(endTime1);
                     String password = request.getParameter("password");
                     int capacity = Integer.parseInt(request.getParameter("capacity"));
                     String meetLink = request.getParameter("meetLink");

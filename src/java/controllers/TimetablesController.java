@@ -157,7 +157,7 @@ public class TimetablesController extends HttpServlet {
                     String slotID = request.getParameter("slotID");
                     String lecturerID = request.getParameter("lecturerID");
                     String semesterID = request.getParameter("semesterID");
-                    Timetables timetables = ttr.read(subjectCode, slotID, lecturerID, semesterID);
+                    Timetables timetables = new Timetables(subjectCode, slotID, lecturerID, semesterID);
                     request.setAttribute("timetables", timetables);
                     ttr.update(timetables);
                     response.sendRedirect(request.getContextPath() + "/timetables/list.do");

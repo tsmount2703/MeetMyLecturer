@@ -63,6 +63,23 @@ public class TimetablesRepository {
         con.close();
         return timetables;
     }
+    
+      public Timetables read1(String subjectCode) throws SQLException {
+        Timetables timetables = null;
+        Connection con = DBContext.getConnection();
+        PreparedStatement stm = con.prepareStatement("select * from Timetables where subjectCode = ?");
+        stm.setString(1, subjectCode);
+        ResultSet rs = stm.executeQuery();
+        if (rs.next()) {
+            timetables = new Timetables();
+            timetables.setSubjectCode(rs.getString("subjectCode"));
+            timetables.setSlotID(rs.getString("slotID"));
+            timetables.setLecturerID(rs.getString("lecturerID"));
+            timetables.setSemesterID(rs.getString("semesterID"));
+        }
+        con.close();
+        return timetables;
+    }
 
     public void create(Timetables timetables) throws SQLException {
         Connection con = DBContext.getConnection();
@@ -78,6 +95,7 @@ public class TimetablesRepository {
     public void update(Timetables timetables) throws SQLException {
         Connection con = DBContext.getConnection();
         PreparedStatement stm = con.prepareStatement("update Timetables set subjectCode = ?, slotID = ?, lecturerID = ?, semesterID = ?  where subjectCode = ? and slotID = ? and lecturerID = ? and semesterID = ? ");
+//        PreparedStatement stm = con.prepareStatement("update Timetables set slotID = ?, lecturerID = ?, semesterID = ?  where subjectCode = ? ");
         stm.setString(1, timetables.getSubjectCode());
         stm.setString(2, timetables.getSlotID());
         stm.setString(3, timetables.getLecturerID());

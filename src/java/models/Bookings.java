@@ -5,6 +5,8 @@
  */
 package models;
 
+import java.util.Date;
+
 /**
  *
  * @author Dell
@@ -15,9 +17,54 @@ public class Bookings {
     private String studentID;
     private String freeSlotID;
     private boolean status;
+    private String subjectCode;
+    private String lecturerID;
+    private Date startTime;
+    private Date endTime;
 
     public Bookings() {
     }
+
+    public Bookings(String studentID, String freeSlotID, boolean status) {
+        this.studentID = studentID;
+        this.freeSlotID = freeSlotID;
+        this.status = status;
+    }
+
+    public Bookings(int ID, String studentID, String freeSlotID, boolean status) {
+        this.ID = ID;
+        this.studentID = studentID;
+        this.freeSlotID = freeSlotID;
+        this.status = status;
+    }
+    
+    
+
+    public Bookings(int ID, String bookingID, String studentID, String freeSlotID, boolean status, String subjectCode, String lecturerID, Date startTime, Date endTime) {
+        this.ID = ID;
+        this.bookingID = bookingID;
+        this.studentID = studentID;
+        this.freeSlotID = freeSlotID;
+        this.status = status;
+        this.subjectCode = subjectCode;
+        this.lecturerID = lecturerID;
+        this.startTime = startTime;
+        this.endTime = endTime;
+    }
+    
+    
+
+    public Bookings(int ID, String bookingID, String studentID, String freeSlotID, boolean status, String subjectCode, String lecturerID) {
+        this.ID = ID;
+        this.bookingID = bookingID;
+        this.studentID = studentID;
+        this.freeSlotID = freeSlotID;
+        this.status = status;
+        this.subjectCode = subjectCode;
+        this.lecturerID = lecturerID;
+    }
+    
+    
 
     public Bookings(int ID, String bookingID, String studentID, String freeSlotID, boolean status) {
         this.ID = ID;
@@ -75,6 +122,41 @@ public class Bookings {
     public void setStatus(boolean status) {
         this.status = status;
     }
+
+    public String getSubjectCode() {
+        return subjectCode;
+    }
+
+    public void setSubjectCode(String subjectCode) {
+        this.subjectCode = subjectCode;
+    }
+
+    public String getLecturerID() {
+        return lecturerID;
+    }
+
+    public void setLecturerID(String lecturerID) {
+        this.lecturerID = lecturerID;
+    }
+
+    public Date getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(Date startTime) {
+        this.startTime = startTime;
+    }
+
+    public Date getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(Date endTime) {
+        this.endTime = endTime;
+    }
+    
+    
+    
     
     
 }

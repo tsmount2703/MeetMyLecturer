@@ -27,6 +27,7 @@
             <td>${timetables.semesterID}</td>
             <td>
                 <a href="<c:url value="/timetables/update.do?subjectCode=${timetables.subjectCode}&slotID=${timetables.slotID}&lecturerID=${timetables.lecturerID}&semesterID=${timetables.semesterID}"/>"><i class="bi bi-pencil-square"></i> Update</a> |
+                <!--<a href="<c:url value="/timetables/update.do?subjectCode=${timetables.subjectCode}"/>"><i class="bi bi-pencil-square"></i> Update</a> |-->
                 <a href="<c:url value="/timetables/delete.do?subjectCode=${timetables.subjectCode}&slotID=${timetables.slotID}&lecturerID=${timetables.lecturerID}&semesterID=${timetables.semesterID}" />"><i class="bi bi-trash3"></i>Delete</a>
             </td>
         </tr>

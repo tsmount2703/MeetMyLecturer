@@ -9,6 +9,28 @@
 <h2>Bookings</h2>
 <hr/>
 <a href="<c:url value="/bookings/create.do" />"></i>Create</a>
+<form action="<c:url value="/bookings/search.do"/>">    
+    <div>
+        <p style="display: inline-block">Search By: </p>
+        <select style="width: 200px; display: inline-block" name="select" class="form-control form-control-line"  >
+            <option name="select" value="subjectCode">Subject Code</option>
+            <option  name="select" value="lecturer">Lecturer</option> 
+            <option  name="select" value="student">Student</option> 
+        </select>
+
+        <select style="width: 200px; display: inline-block"  name="semester" class="form-control form-control-line"  >
+            <option name="semester" value="SP22">SPRING2022</option>
+            <option name="semester" value="SU22">SUMMER2022</option> 
+            <option name="semester" value="FA22">FALL2022</option> 
+            <option name="semester" value="SP23">SPRING2023</option>
+            <option name="semester" value="SU23">SUMMER2023</option> 
+            <option name="semester" value="FA23">FALL2023</option> 
+        </select>   
+
+        <input style="height: 38px; display: inline-block" type="text" placeholder="Please enter ID" name="ID"  >
+        <button style="display: inline-block; margin-bottom: 4px" type="submit" class="btn btn-success" name="select" value="${requestScope[select]}">Search <i class="bi bi-search"></i></button> 
+        <h5 style="color: red">${msg}</h5>
+    </div>
 <table class="table table-striped" border="1">
     <tr>
         <th>No.</th>
@@ -35,4 +57,4 @@
 
     </c:forEach>
 </table>
-
+</form>

@@ -67,7 +67,7 @@ public class SlotsRepository {
     public void create(Slots slots) throws SQLException {
         Connection con = DBContext.getConnection();
         PreparedStatement stm = con.prepareStatement("insert into Slots values(?, ?, ?, ?, ?)");
-        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
         stm.setString(1, slots.getSlotID());
         stm.setString(2, slots.getDay1());
         stm.setString(3, slots.getDay2());
@@ -80,7 +80,7 @@ public class SlotsRepository {
     public void update(Slots slots) throws SQLException {
         Connection con = DBContext.getConnection();
         PreparedStatement stm = con.prepareStatement("update Slots set day1 = ?, day2 = ?, starttime = ?, endtime = ? where slotID = ?");
-        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
         stm.setString(1, slots.getDay1());
         stm.setString(2, slots.getDay2());
         stm.setString(3, sdf.format(slots.getStartTime()));

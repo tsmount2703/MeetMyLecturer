@@ -81,7 +81,7 @@ public class SemestersRepository {
         stm.setString(1, semesters.getSemesterName());
         stm.setString(2, sdf.format(semesters.getStartDay()));
         stm.setString(3, sdf.format(semesters.getEndDay()));
-        stm.setString(4, sdf.format(semesters.getSemesterID()));
+        stm.setString(4, semesters.getSemesterID());
         int count = stm.executeUpdate();
         con.close();
     }

@@ -63,7 +63,6 @@ public class RequestsController extends HttpServlet {
 
             case "search":
                 try {
-
                     search(request, response);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -277,10 +276,10 @@ public class RequestsController extends HttpServlet {
                     String day = request.getParameter("day");
                     String start = request.getParameter("start");
                     String startTime1 = day + " " + start;
-                    Date startTime = Services.sdfDateTime.parse(request.getParameter(startTime1));
+                    Date startTime = Services.sdfDateTime.parse(startTime1);
                     String end = request.getParameter("end");
                     String endTime1 = day + " " + end;
-                    Date endTime = Services.sdfDateTime.parse(request.getParameter(endTime1));
+                    Date endTime = Services.sdfDateTime.parse(endTime1);
                     String description = request.getParameter("description");
                     String studentID = request.getParameter("studentID");
                     String lecturerID = request.getParameter("lecturerID");
@@ -335,10 +334,10 @@ public class RequestsController extends HttpServlet {
                     String day = request.getParameter("day");
                     String start = request.getParameter("start");
                     String startTime1 = day + " " + start;
-                    Date startTime = Services.sdfDateTime.parse(request.getParameter(startTime1));
+                    Date startTime = Services.sdfDateTime.parse(startTime1);
                     String end = request.getParameter("end");
                     String endTime1 = day + " " + end;
-                    Date endTime = Services.sdfDateTime.parse(request.getParameter(endTime1));
+                    Date endTime = Services.sdfDateTime.parse(endTime1);
                     String description = request.getParameter("description");
                     String studentID = request.getParameter("studentID");
                     String lecturerID = request.getParameter("lecturerID");
@@ -347,10 +346,10 @@ public class RequestsController extends HttpServlet {
                     rr.update(requests);
                     response.sendRedirect(request.getContextPath() + "/requests/list.do");
                 } catch (Exception ex) {
-                    ex.printStackTrace();
+                   //Hiện lại create form để nhập lại dữ liệu
+                    ex.printStackTrace();//In thông báo chi tiết cho developer
                     request.setAttribute("message", ex.getMessage());
-                    request.setAttribute("controller", "error");
-                    request.setAttribute("action", "error");
+                    request.setAttribute("action", "update");
                     request.getRequestDispatcher("WEB-INF/layouts/main.jsp").forward(request, response);
                 }
                 break;

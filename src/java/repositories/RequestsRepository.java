@@ -147,11 +147,11 @@ public class RequestsRepository {
         con.close();
         return requests;
     }
-    
-        public void create(Requests requests) throws SQLException {
+
+    public void create(Requests requests) throws SQLException {
         Connection con = DBContext.getConnection();
         PreparedStatement stm = con.prepareStatement("insert into Requests values(?, ?, ?, ?, ?, ?, ?)");
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
         stm.setBoolean(1, requests.isStatus());
         stm.setString(2, requests.getSubjectCode());
         stm.setString(3, sdf.format(requests.getStartTime()));
@@ -165,20 +165,21 @@ public class RequestsRepository {
 
     public void update(Requests requests) throws SQLException {
         Connection con = DBContext.getConnection();
-        PreparedStatement stm = con.prepareStatement("update Requests status = ?, subjectCode = ?, startTime = ?, endTime = ?, description = ?, studentID = ?, lecturerID = ? where ID = ? ");
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        PreparedStatement stm = con.prepareStatement("update Requests set status = ?, subjectCode = ?, startTime = ?, endTime = ?, description = ?, studentID = ?, lecturerID = ? where ID = ? ");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
         stm.setBoolean(1, requests.isStatus());
         stm.setString(2, requests.getSubjectCode());
         stm.setString(3, sdf.format(requests.getStartTime()));
         stm.setString(4, sdf.format(requests.getEndTime()));
-        stm.setString(5, sdf.format(requests.getDescription()));
+        stm.setString(5, requests.getDescription());
         stm.setString(6, requests.getStudentID());
         stm.setString(7, requests.getLecturerID());
         stm.setInt(8, requests.getID());
         int count = stm.executeUpdate();
         con.close();
     }
-       public void delete(int ID) throws SQLException {
+
+    public void delete(int ID) throws SQLException {
         Connection con = DBContext.getConnection();
         PreparedStatement stm = con.prepareStatement("delete from Requests where ID = ? ");
         stm.setInt(1, ID);
